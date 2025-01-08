@@ -1,74 +1,70 @@
+const rock = document.querySelector("#rock");
+const paper = document.querySelector("#paper");
+const scissor = document.querySelector("#scissor");
+let humanScore = 0;
+let compScore = 0;
+
+rock.addEventListener("click", () => {
+    getHumanChoice("rock");
+});
+paper.addEventListener("click", () => {
+    getHumanChoice("paper");
+});
+scissor.addEventListener("click", () => {
+    getHumanChoice("scissors");
+});
+
+const container = document.querySelector("#container");
+let compHand = document.createElement("p");
+let scoreHuman = document.createElement("p");
+let scoreComp = document.createElement("p");
+container.appendChild(compHand);
+container.appendChild(scoreHuman);
+container.appendChild(scoreComp);
+//content.textContent = "Comp Score:" + compScore;
+compHand.textContent = "Computer Choice: "
+scoreHuman.textContent = "Your Score:" + humanScore;
+scoreComp.textContent = "Computer Score:" + compScore;
+console.log(humanScore);
+
 
 function getComputerChoice() {
     let compHand = getRndInteger(1, 3);
     switch(compHand){
         case 1:
-            return "Rock";
+            return "rock";
         case 2:
-            return "Paper";
+            return "paper";
         case 3:
-            return "Scissors"
+            return "scissors"
     }
 }
 
-function getHumanChoice() {
-    let humanHand = prompt("Enter Rock Paper Scissor: ").toLowerCase();
-    switch(humanHand) {
-        case "rock":
-            return humanHand;
-        case "paper":
-            return humanHand;
-        case "scissors":
-            return humanHand;
-        default:
-            return "Wrong Input";
+function getHumanChoice(humanChoice) {
+    //let humanHand = prompt("Enter Rock Paper Scissor: ").toLowerCase();
+    let compChoice = getComputerChoice();
+    //console.log(compChoice);
+    //console.log(humanChoice);
+    console.log(humanScore);
+    if(compChoice === humanChoice) {
+        compScore += 0;
+        humanScore += 0;
     }
-}
-
-
-
-function playGame() {
-    let humanScore = 0;
-    let compScore = 0;
-    function playRound(getComputerChoice, getHumanChoice) {
-        let compChoice = getComputerChoice().toLowerCase();
-        let humanChoice = getHumanChoice().toLowerCase();
-        let draw = "It's a draw!";
-        let win = "You win!";
-        let lose = "You lose :(";
-        if (compChoice === humanChoice) {
-            return "It's a draw!";
-        } 
-        else if (
-            (compChoice === "rock" && humanChoice === "scissors") ||
-            (compChoice === "scissors" && humanChoice === "paper") ||
-            (compChoice === "paper" && humanChoice === "rock")
-        ) {
-            compScore++;
-            return "You lose :(";
-        } 
-        else {
-            humanScore++;
-            return "You win!";
-        }
-    }
-
-    for(let i = 0; i < 5 ; i++) {
-        console.log(playRound(getComputerChoice, getHumanChoice));
-    }
-    if(humanScore > compScore) {
-        return "You Win";
-    }
-    else if(humanScore < compScore){
-        return "You lose";
-    }
+    else if (
+        (compChoice === "rock" && humanChoice === "scissors") ||
+        (compChoice === "scissors" && humanChoice === "paper") ||
+        (compChoice === "paper" && humanChoice === "rock")
+    ) {
+        compScore++;
+    } 
     else {
-        return "It's a draw";
+        humanScore++;
     }
+    compHand.textContent = "Computer Choice: " + compChoice;
+    scoreHuman.textContent = "Your Score: " + humanScore;
+    scoreComp.textContent = "Computer Score: " + compScore;
 }
 
 function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
-
-console.log(playGame());
